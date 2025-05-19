@@ -1,19 +1,19 @@
 import { splitProps } from "solid-js";
 import type { ComponentProps } from "solid-js";
 
-import { createMousePosition } from "@solid-primitives/mouse";
+import { useMousePosition } from "@solid-primitives/mouse";
 import clsx from "clsx";
 
 export function Cursor(props: ComponentProps<"svg">) {
 	const [split, other] = splitProps(props, ["class"]);
 
-	const position = createMousePosition(window);
+	const position = useMousePosition();
 
 	return (
 		<svg
 			{...other}
 			class={clsx(
-				"pointer-events-none top-0 left-0 z-999 will-change-transform",
+				"pointer-events-none top-0 left-0 z-999 will-change-transform contain-layout contain-paint contain-size contain-style",
 
 				"data-[is-inside=false]:hidden",
 				"data-[is-inside=true]:absolute",
@@ -24,7 +24,7 @@ export function Cursor(props: ComponentProps<"svg">) {
 			fill="none"
 			height="25"
 			style={{
-				transform: `translate(${position.x}px, ${position.y}px)`,
+				transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
 			}}
 			viewBox="0 0 22 25"
 			width="22"
